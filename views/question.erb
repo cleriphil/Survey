@@ -1,0 +1,6 @@
+
+<form action='/user/survey/<%= @survey.id %>/questions/<%= @question.id %>' method='post'>
+  <label for='answer'><%= @question.description %></label>
+  <input id='answer' name='name' type='text'>
+  <button class='btn-default'>Submit</button>
+</form>

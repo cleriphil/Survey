@@ -3,7 +3,7 @@ require('sinatra/reloader')
 require('sinatra/activerecord')
 require('./lib/survey')
 require('./lib/question')
-# require('./lib/answer')
+require('./lib/answer')
 require('pg')
 require('pry')
 also_reload('lib/**/*.rb')
@@ -86,6 +86,14 @@ delete('/admin/questions/:id') do
   erb(:survey_edit)
 end
 
+post('/admin/questions/:question_id/answers') do
+  @question = Question.find(params.fetch('question_id').to_i)
+  @survey = Survey.find(@question.survey_id)
+  description = params.fetch('description')
+  Answer.create({:description => description, :question_id => @question.id, :count => 0})
+  @questions = @survey.questions()
+  erb(:survey_edit)
+end
 
 
 
@@ -94,3 +102,32 @@ get('/user/surveys') do
   @user = true
   erb(:surveys)
 end
+
+get('/user/surveys/:id') do
+  @survey = Survey.find(params.fetch('id').to_i)
+  # @counter = 1
+  erb(:user_survey)
+end
+
+
+
+get('/user/surveys/:id/questions/:question_id') do
+  @survey = Survey.find(params.fetch('id').to_i)
+  @question = Question.find(params.fetch('question_id').to_i)
+
+  erb(:question)
+end
+
+post('/user/surveys/:id/questions/:question_id') do
+  @survey = Survey.find(params.fetch('id').to_i)
+  @question = Question.find(params.fetch('question_id').to_i)
+
+  erb(:user_survey)
+end
+
+
+#
+# ANswer.create({:count = 0})
+#
+# count = my_answer.count
+# my_answer = Answer.update({:count => count + 1})

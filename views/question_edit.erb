@@ -9,6 +9,23 @@
   <button class='btn-default'>Submit</button>
 </form>
 
+<p>Answers</p>
+<ol>
+<% @question.answers().each() do |answer| %>
+  <li><%= answer.description %></li>
+<% end %>
+<ol>
+
+<p>Add Answers</p>
+<form action='/admin/questions/<%= @question.id %>/answers' method='post'>
+  <div class='form-group'>
+    <label for='description'>Enter a Possible Answer:</label>
+    <input id='description' name='description' type='text' required>
+  </div>
+  <button class='btn-default'>Submit</button>
+</form>
+
+
 <br>
 <form action='/admin/questions/<%= @question.id %>' method='post'>
   <div class='form-group'>
