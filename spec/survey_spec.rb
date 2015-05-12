@@ -7,4 +7,12 @@ describe(Survey) do
     question2 = Question.create({:description => "Where would you like to go?", :survey_id => survey.id})
     expect(survey.questions()).to(eq([question1, question2]))
   end
+  it('makes sure the title is no more than 50 characters') do
+    survey = Survey.new({:title => "P".*(51)})
+    expect(survey.save()).to(eq(false))
+  end
+  it('converts title to be capitalized') do
+    survey = Survey.create({:title => "places"})
+    expect(survey.title).to(eq("Places"))
+  end
 end
