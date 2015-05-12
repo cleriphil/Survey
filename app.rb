@@ -25,5 +25,14 @@ end
 
 get('/surveys/:id') do
   @survey = Survey.find(params.fetch('id').to_i)
+  @questions = @survey.questions()
+  erb(:survey)
+end
+
+post('/surveys/:id') do
+  @survey = Survey.find(params.fetch('id').to_i)
+  description = params.fetch('description')
+  Question.create({:description => description, :survey_id => @survey.id})
+  @questions = @survey.questions()
   erb(:survey)
 end
