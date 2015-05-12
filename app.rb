@@ -55,6 +55,13 @@ patch('/admin/surveys/:id') do
   erb(:surveys)
 end
 
+delete('/admin/surveys/:id') do
+  survey = Survey.find(params.fetch('id').to_i)
+  survey.delete
+  @surveys = Survey.all.sort
+  erb(:surveys)
+end
+
 get('/admin/questions/:id') do
   @question = Question.find(params.fetch('id').to_i)
   @survey = Survey.find(@question.survey_id)
@@ -70,6 +77,17 @@ patch('/admin/questions/:id') do
   @question.update({:description => description})
   erb(:survey_edit)
 end
+
+delete('/admin/questions/:id') do
+  @question = Question.find(params.fetch('id').to_i)
+  @survey = Survey.find(@question.survey_id)
+  @questions = @survey.questions()
+  @question.delete()
+  erb(:survey_edit)
+end
+
+
+
 
 get('/user/surveys') do
   @surveys = Survey.all.sort

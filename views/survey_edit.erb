@@ -17,4 +17,11 @@
 <% end %>
 </ol>
 
+<form action='/admin/surveys/<%= @survey.id %>' method='post'>
+  <div class='form-group'>
+    <input name="_method" type="hidden" value="delete">
+    <button id='delete_survey' class='btn btn-danger'>Delete Survey</button>
+  </div>
+</form>
+
 <a class='btn btn-default' href='/admin/surveys' role='button'>Back to Surveys</a>
