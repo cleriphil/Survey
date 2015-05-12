@@ -1,6 +1,6 @@
 
 <h1><%= @survey.title %></h1>
-<ul>
+<ol>
 <% if @questions.any?() %>
   <% @questions.each() do |question|%>
     <li><%= question.description %></li>
@@ -8,7 +8,7 @@
 <% else %>
   <p>There are no questions, yet.</p>
 <% end %>
-</ul>
+</ol>
 
 <h3>Add Questions to <%= @survey.title %></h3>
 

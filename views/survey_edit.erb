@@ -1,0 +1,20 @@
+<h3>Edit <%= @survey.title %></h3>
+
+
+<form action='/admin/surveys/<%= @survey.id %>' method='post'>
+  <input name='_method' type='hidden' value='patch'>
+
+  <label for='title'>Enter New Title:</label>
+  <input id='title' name='title' type='text' required>
+  <button class='btn-defalt'>Submit</button>
+</form>
+
+<h4>Edit questions:</h4>
+
+<ol>
+<% @survey.questions().each() do |question| %>
+  <li><a href='/admin/questions/<%= question.id %>'><%= question.description %></a></li>
+<% end %>
+</ol>
+
+<a class='btn btn-default' href='/admin/surveys' role='button'>Back to Surveys</a>

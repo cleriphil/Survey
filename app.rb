@@ -12,14 +12,8 @@ get('/') do
   erb(:index)
 end
 
-get('/user/surveys') do
-  @surveys = Survey.all
-  @user = true
-  erb(:surveys)
-end
-
 get('/admin/surveys') do
-  @surveys = Survey.all
+  @surveys = Survey.all.sort
   @user = false
   erb(:surveys)
 end
@@ -51,4 +45,34 @@ post('/admin/surveys/:id/questions') do
   Question.create({:description => description, :survey_id => @survey.id})
   @questions = @survey.questions()
   erb(:admin_survey)
+end
+
+patch('/admin/surveys/:id') do
+  @survey = Survey.find(params.fetch('id').to_i)
+  title = params.fetch('title')
+  @survey.update({:title => title})
+  @surveys = Survey.all.sort
+  erb(:surveys)
+end
+
+get('/admin/questions/:id') do
+  @question = Question.find(params.fetch('id').to_i)
+  @survey = Survey.find(@question.survey_id)
+  @questions = @survey.questions()
+  erb(:question_edit)
+end
+
+patch('/admin/questions/:id') do
+  @question = Question.find(params.fetch('id').to_i)
+  @survey = Survey.find(@question.survey_id)
+  @questions = @survey.questions()
+  description = params.fetch('description')
+  @question.update({:description => description})
+  erb(:survey_edit)
+end
+
+get('/user/surveys') do
+  @surveys = Survey.all.sort
+  @user = true
+  erb(:surveys)
 end
