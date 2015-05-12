@@ -12,10 +12,13 @@
 
 <h3>Add Questions to <%= @survey.title %></h3>
 
-<form action='/surveys/<%= @survey.id %>' method='post'>
+<form action='/admin/surveys/<%= @survey.id %>/questions' method='post'>
   <div class='form-group'>
     <label for='description'>Enter a Question:</label>
     <input id='description' name='description' type='text'>
   </div>
-  <button class='btn-default'>Submit</button>
+  <button class='btn btn-default'>Submit</button>
 </form>
+<br>
+
+<a class='btn btn-default' href='/admin/surveys' role='button'>Done</a>

@@ -9,30 +9,46 @@ require('pry')
 also_reload('lib/**/*.rb')
 
 get('/') do
-  @surveys = Survey.all
   erb(:index)
 end
 
-get('/surveys/new') do
+get('/user/surveys') do
+  @surveys = Survey.all
+  @user = true
+  erb(:surveys)
+end
+
+get('/admin/surveys') do
+  @surveys = Survey.all
+  @user = false
+  erb(:surveys)
+end
+
+get('/admin/surveys/:id/edit') do
+  @survey = Survey.find(params.fetch('id').to_i)
+  erb(:survey_edit)
+end
+
+get('/admin/surveys/new') do
   erb(:survey_form)
 end
 
-post('/surveys') do
+post('/admin/surveys') do
   title = params.fetch('title')
   @survey = Survey.create({:title => title})
   erb(:success)
 end
 
-get('/surveys/:id') do
+get('/admin/surveys/:id/questions') do
   @survey = Survey.find(params.fetch('id').to_i)
   @questions = @survey.questions()
-  erb(:survey)
+  erb(:admin_survey)
 end
 
-post('/surveys/:id') do
+post('/admin/surveys/:id/questions') do
   @survey = Survey.find(params.fetch('id').to_i)
   description = params.fetch('description')
   Question.create({:description => description, :survey_id => @survey.id})
   @questions = @survey.questions()
-  erb(:survey)
+  erb(:admin_survey)
 end
