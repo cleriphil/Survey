@@ -95,7 +95,7 @@ post('/admin/questions/:question_id/answers') do
   erb(:survey_edit)
 end
 
-
+#-------------
 
 get('/user/surveys') do
   @surveys = Survey.all.sort
@@ -105,29 +105,22 @@ end
 
 get('/user/surveys/:id') do
   @survey = Survey.find(params.fetch('id').to_i)
-  # @counter = 1
   erb(:user_survey)
 end
-
 
 
 get('/user/surveys/:id/questions/:question_id') do
   @survey = Survey.find(params.fetch('id').to_i)
   @question = Question.find(params.fetch('question_id').to_i)
-
   erb(:question)
 end
 
 post('/user/surveys/:id/questions/:question_id') do
   @survey = Survey.find(params.fetch('id').to_i)
   @question = Question.find(params.fetch('question_id').to_i)
-
+  answer_id = params.fetch('answer_id').to_i
+  my_answer = Answer.find(answer_id)
+  count = my_answer.count.+(1)
+  my_answer.update({:count => count})
   erb(:user_survey)
 end
-
-
-#
-# ANswer.create({:count = 0})
-#
-# count = my_answer.count
-# my_answer = Answer.update({:count => count + 1})

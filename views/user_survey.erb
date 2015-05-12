@@ -3,6 +3,6 @@
 
 <ol>
 <% @survey.questions().each() do |question| %>
-  <li><a href='/user/surveys/:id/questions/<%= question.id %>'><%= question.description %></a></li>
+  <li><a href='/user/surveys/<%= @survey.id %>/questions/<%= question.id %>'><%= question.description %></a></li>
 <% end %>
 </ol>

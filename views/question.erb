@@ -1,6 +1,10 @@
 
-<form action='/user/survey/<%= @survey.id %>/questions/<%= @question.id %>' method='post'>
-  <label for='answer'><%= @question.description %></label>
-  <input id='answer' name='name' type='text'>
+<form action='/user/surveys/<%= @survey.id %>/questions/<%= @question.id %>' method='post'>
+  <label for="answer_id">Select an Answer</label>
+  <select id='answer_id' name='answer_id' type='text'>
+    <% @question.answers.each() do |answer| %>
+    <option value="<%= answer.id()%>"> <%= answer.description() %> </option>
+    <% end %>
+  </select>
   <button class='btn-default'>Submit</button>
 </form>
